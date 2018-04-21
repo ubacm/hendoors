@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'hendoors.categories',
     'hendoors.entries',
     'hendoors.events',
+    'hendoors.votes',
 ]
 
 MIDDLEWARE = [
