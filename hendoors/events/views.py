@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from django.views.generic import DetailView, ListView
 
-# Create your views here.
+from .models import Event
+
+
+class EventDetailView(DetailView):
+    model = Event
+
+
+class EventListView(ListView):
+    model = Event

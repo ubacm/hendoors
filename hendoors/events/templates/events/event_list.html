@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Events</title>
+</head>
+<body>
+  <h1>Events</h1>
+  {% if event_list %}
+    <ul>
+      {% for event in event_list %}
+        <li><a href="{{ event.get_absolute_url }}">{{ event }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no events at the moment.</p>
+  {% endif %}
+</body>
+</html>
