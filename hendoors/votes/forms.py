@@ -7,7 +7,7 @@ from hendoors.entries.models import Entry
 class VoteCastForm(forms.Form):
     category = forms.ModelChoiceField(Category.objects.all())
     entry = forms.ModelChoiceField(Entry.objects.all())
-    weight = forms.IntegerField(max_value=1, min_value=0)
+    weight = forms.IntegerField(max_value=1, min_value=0, initial=1)
 
     def clean_category(self):
         category = self.cleaned_data['category']

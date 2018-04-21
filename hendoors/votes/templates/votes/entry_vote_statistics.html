@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vote Statistics (Entry)</title>
+</head>
+<body>
+  <h1>Votes on <a href="{{ entry.get_absolute_url }}">{{ entry }}</a></h1>
+
+  {% if categories %}
+    <ul>
+      {% for category in categories %}
+        <li>
+          <a href="{{ category.get_absolute_url }}">{{ category }}</a>:
+          {{ category.total }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p><em>No categories found for this entry.</em></p>
+  {% endif %}
+</body>
+</html>

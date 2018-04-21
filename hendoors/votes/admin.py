@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from . import models
+
+
+@admin.register(models.Vote)
+class VoteModelAdmin(admin.ModelAdmin):
+    list_display = ('user', 'category', 'entry', 'weight')
+    list_display_links = ('weight',)

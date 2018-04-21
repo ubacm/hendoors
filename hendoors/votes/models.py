@@ -10,3 +10,6 @@ class Vote(models.Model):
     category = models.ForeignKey(Category, models.CASCADE)
     entry = models.ForeignKey(Entry, models.CASCADE)
     weight = models.IntegerField(default=1)
+
+    class Meta:
+        unique_together = ('user', 'category', 'entry')
