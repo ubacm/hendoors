@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Entry</title>
+</head>
+<body>
+  <h1>Entry: {{ entry.name }}</h1>
+
+  <dl>
+    <dt>Categories</dt>
+    {% for category in entry.categories.all %}
+      <dd><a href="{{ category.get_absolute_url }}">{{ category }}</a></dd>
+    {% empty %}
+      <dd><em>This entry is currently uncategorized.</em></dd>
+    {% endfor %}
+
+    <dt>Description</dt>
+    <dd>{{ entry.description }}</dd>
+
+    {% if entry.website %}
+      <dt>Website</dt>
+      <dd><a href="{{ entry.website }}">{{ entry.website }}</a></dd>
+    {% endif %}
+
+    {% if entry.repository %}
+      <dt>Repository</dt>
+      <dd><a href="{{ entry.repository }}">{{ entry.repository }}</a></dd>
+    {% endif %}
+  </dl>
+
+  {% for image in entry.images.all %}
+    <img src="{{ image.image.url }}" alt="{{ image.image.name }}">
+  {% endfor %}
+</body>
+</html>
