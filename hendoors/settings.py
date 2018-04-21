@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'hendoors.categories',
+    'hendoors.entries',
     'hendoors.events',
 ]
 
