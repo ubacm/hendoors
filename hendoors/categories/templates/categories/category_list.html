@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Categories</title>
+</head>
+<body>
+  <h1>Categories</h1>
+  {% if category_list %}
+    <ul>
+      {% for category in category_list %}
+        <li>
+          <a href="{{ category.get_absolute_url }}">{{ category }}</a>
+          (<a href="{{ category.event.get_absolute_url }}">{{ category.event }}</a>)
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no categories at the moment.</p>
+  {% endif %}
+</body>
+</html>

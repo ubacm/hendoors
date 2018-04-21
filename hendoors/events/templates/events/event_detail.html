@@ -15,6 +15,15 @@
 
     <dt>What?</dt>
     <dd>{{ event.description }}</dd>
+
+    <dt>Categories</dt>
+    {% for category in event.category_set.all %}
+      <dd><a href="{{ category.get_absolute_url }}">{{ category }}</a></dd>
+    {% empty %}
+      <dd><em>No categories</em></dd>
+    {% endfor %}
+
+    <dl></dl>
   </dl>
 </body>
 </html>
