@@ -19,3 +19,6 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('categories:detail', kwargs={'pk': self.pk})
+
+    def is_accepting_votes(self):
+        return self.event.voting_open if self.voting_open is None else self.voting_open
