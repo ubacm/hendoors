@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% if entry.pk %}Edit{% else %}Create{% endif %} Entry</title>
+</head>
+<body>
+  <h1>{% if entry.pk %}Edit{% else %}Create{% endif %} Entry</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Save</button>
+  </form>
+</body>
+</html>
