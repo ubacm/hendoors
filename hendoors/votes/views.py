@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import FormView, TemplateView
 
@@ -36,7 +37,16 @@ class VoteCastView(LoginRequiredMixin, FormView):
             vote.weight = weight
             vote.save()
 
-        return redirect(entry)
+        return JsonResponse({'success': True})
+
+    def form_invalid(self, form):
+        all_errors = []
+        for field, errors in form.errors.items():
+            all_errors.extend(errors)
+        return JsonResponse({
+            'success': False,
+            'errors': all_errors,
+        })
 
 
 class CategoryVoteStatisticsView(TemplateView):
