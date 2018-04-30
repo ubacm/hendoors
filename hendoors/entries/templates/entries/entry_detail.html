@@ -85,18 +85,17 @@
   document.getElementById('vote_form').onsubmit = function (event) {
     event.preventDefault()
     var formData = new FormData(document.forms.vote_form)
-    var sendData = {
-      'category': formData.get('category'),
-      'entry': {{ entry.id }},
-      'weight': 1
-    }
+    var sendForm = new FormData()
+    
+    sendForm.append('category', formData.get('category'))
+    sendForm.append('entry', {{ entry.id }})
+    sendForm.append('weight', 1)
 
     fetch('{% url "votes:cast" %}', {
-      body: JSON.stringify(sendData), // must match 'Content-Type' header
+      body: sendForm, // must match 'Content-Type' header
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       credentials: 'same-origin', // include, same-origin, *omit
       headers: {
-        'content-type': 'application/json',
         'X-CSRFToken': formData.get('csrfmiddlewaretoken')
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
