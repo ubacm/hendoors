@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Events</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Events{% endblock %}
+
+{% block content %}
   <h1>Events</h1>
   {% if event_list %}
     <ul>
@@ -15,5 +12,4 @@
   {% else %}
     <p>There are no events at the moment.</p>
   {% endif %}
-</body>
-</html>
+{% endblock %}

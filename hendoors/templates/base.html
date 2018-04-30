@@ -1,0 +1,13 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Hendoors{% endblock %}</title>
+  <link href="{% static "index.css" %}" rel="stylesheet">
+</head>
+<body>
+  {% block content %}
+  {% endblock %}
+</body>
+</html>

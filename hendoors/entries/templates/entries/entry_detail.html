@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Entry</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}{{ entry.name }}{% endblock %}
+
+{% block content %}
   <h1>Entry: {{ entry.name }}</h1>
 
   {# TODO: add forms to vote for the various categories #}
@@ -34,5 +31,5 @@
   {% for image in entry.images.all %}
     <img src="{{ image.image.url }}" alt="{{ image.image.name }}">
   {% endfor %}
-</body>
-</html>
+{% endblock %}
+
