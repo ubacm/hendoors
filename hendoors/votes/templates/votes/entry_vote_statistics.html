@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Vote Statistics (Entry)</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}{{ entry }} Votes{% endblock %}
+
+{% block content %}
   <h1>Votes on <a href="{{ entry.get_absolute_url }}">{{ entry }}</a></h1>
 
   {% if categories %}
@@ -19,5 +16,4 @@
   {% else %}
     <p><em>No categories found for this entry.</em></p>
   {% endif %}
-</body>
-</html>
+{% endblock %}

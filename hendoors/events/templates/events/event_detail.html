@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Event</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Events{% endblock %}
+
+{% block content %}
   <h1>Event: {{ event }}</h1>
   <dl>
     <dt>When?</dt>
@@ -25,5 +22,4 @@
 
     <dl></dl>
   </dl>
-</body>
-</html>
+{% endblock %}
