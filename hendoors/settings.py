@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_slack_oauth',
+
+    'hendoors.accounts',
     'hendoors.categories',
     'hendoors.entries',
     'hendoors.events',
@@ -127,3 +130,17 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+LOGIN_URL = 'slack_auth'
+
+
+CHECKIN_SCORES_URL = 'https://chicken-ubacm.herokuapp.com/users/scores'
+
+
+SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
+SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
+SLACK_SCOPE = 'identity.basic,identity.email'
+SLACK_PIPELINES = [
+    'hendoors.accounts.pipelines.register_slack_user',
+]
