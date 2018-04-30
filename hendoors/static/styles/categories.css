@@ -1,0 +1,46 @@
+.partial__categories > .category {
+  margin-bottom: 10px;
+}
+
+.partial__categories > .category > a {
+  align-items: center;
+  background: #e4e4e4;
+  border-radius: 4px;
+  color: #000;
+  display: flex;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+
+.partial__categories > .category > a:hover {
+  background: #383838;
+  color: #fff;
+}
+
+.partial__categories > .category.open > a:hover {
+  background: #006570;
+  color: #fff;
+}
+
+.partial__categories > .category.open > a {
+  background: #fff;
+  color: #00a69c;
+}
+
+.partial__categories > .category > a > .copy {
+  /* display: flex; */
+  justify-content: space-between;
+  width: 100%;
+  min-height: 80px;
+}
+
+.partial__categories > .category > a > .copy > .title {
+}
+
+.partial__categories > .category > a > .copy > .title > .name {
+  font-weight: bold;
+}
+
+.partial__categories > .category > a > .copy > .title > .status {
+  font-weight: normal;
+}

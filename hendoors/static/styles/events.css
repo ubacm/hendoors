@@ -1,0 +1,51 @@
+ul.partial__event_list {
+  list-style: none;
+}
+
+ul.partial__event_list > li.event {
+  margin-bottom: 10px;
+}
+
+ul.partial__event_list > li.event > a {
+  align-items: center;
+  background: #e4e4e4;
+  border-bottom: 6px solid #fff;
+  border-radius: 4px;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  padding: 10px 20px;
+  width: 100%;
+}
+
+ul.partial__event_list > li.event.open > a {
+  background: #fff;
+  border-bottom: 6px solid #00a69c;
+  color: #00a69c;
+}
+
+ul.partial__event_list > li.event > a:hover {
+  background: #383838;
+  color: #fff;
+}
+
+ul.partial__event_list > li.event.open > a:hover {
+  background: #006570;
+}
+
+ul.partial__event_list > li.event > a > .copy > .name {
+  font-weight: bold;
+}
+
+ul.partial__event_list > li.event > a > .status {
+  text-align: center;
+}
+
+ul.partial__event_list > li.event > a > .status > .icon {
+  margin-bottom: 10px;
+}
+
+ul.partial__event_list > li.event > a > .status > .info {
+  font-weight: bold;
+}

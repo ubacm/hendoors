@@ -2,6 +2,7 @@
 {% block title %}{{ category }}{% endblock %}
 
 {% block content %}
+  <p><a href="{{ category.event.get_absolute_url }}">Back to {{ category.event }}</a></p>
   <h1>Category: {{ category }}</h1>
 
   {% if category.image %}

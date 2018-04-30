@@ -2,6 +2,11 @@
 {% block title %}{{ entry.name }}{% endblock %}
 
 {% block content %}
+  <p>
+    <a href="{{ entry.categories.all.0.event.get_absolute_url }}">
+      Back to {{ entry.categories.all.0.event }}
+    </a>
+  </p>
   <h1>Entry: {{ entry.name }}</h1>
 
   {# TODO: add forms to vote for the various categories #}
