@@ -48,6 +48,31 @@
     {% endfor %}
   </div>
   {% endif %}
+
+  <h2>Vote</h2>
+  {% if request.user.is_authenticated %}
+    {% if entry.categories.all %}
+    <form id="vote_form">
+      {% csrf_token %}
+      <select name="category">
+        {% for category in entry.categories.all %}
+          {% if category.is_accepting_votes %}
+          <option value="{{ category.id }}">{{ category }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+      <button class="button button_primary">Vote</button>
+    </form>
+    <div id="form_message"></div>
+    {% else %}
+    <p><em>This entry is not categorized, therefor you cannot vote for it. :(</em></p>
+    {% endif %}
+  
+  {% else %}
+  <button class="button button_primary">
+    Sign in using UB ACM Slack
+  </button>
+  {% endif %}
 {% endblock %}
 
 {% block script %}
@@ -56,5 +81,37 @@
   lightGallery(document.getElementById('gallery'), {
     thumbnail: true
   })
+
+  document.getElementById('vote_form').onsubmit = function (event) {
+    event.preventDefault()
+    var formData = new FormData(document.forms.vote_form)
+    var sendData = {
+      'category': formData.get('category'),
+      'entry': {{ entry.id }},
+      'weight': 1
+    }
+
+    fetch('{% url "votes:cast" %}', {
+      body: JSON.stringify(sendData), // must match 'Content-Type' header
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, same-origin, *omit
+      headers: {
+        'content-type': 'application/json',
+        'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+      },
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    })
+    .then(function (res) {
+      return res.json()
+    })
+    .then(function (json) {
+      console.log(json)
+      if (!json.success) {
+        document.getElementById('form_message').innerHTML = json.errors.join(' ')
+      } else {
+        document.getElementById('form_message').innerHTML = 'You have successfully voted for {{ entry }}!'
+      }
+    })
+  }
 </script>
 {% endblock %}
