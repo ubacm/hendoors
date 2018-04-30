@@ -18,8 +18,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from . import views as main_views
+
 
 urlpatterns = [
+    path('', main_views.HomeView.as_view(), name='home'),
     path('admin/', admin.site.urls),
     path('accounts/', include('hendoors.accounts.urls')),
     path('categories/', include('hendoors.categories.urls')),
