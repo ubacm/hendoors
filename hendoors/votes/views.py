@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404, redirect
@@ -10,9 +11,15 @@ from .forms import VoteCastForm
 from .models import Vote
 
 
-class VoteCastView(FormView):
+class VoteCastView(LoginRequiredMixin, FormView):
     form_class = VoteCastForm
     template_name = 'votes/vote_cast.html'
+
+    def get_form(self, form_class=None):
+        super().get_form(form_class=form_class)
+        form = super().get_form(form_class=form_class)
+        form.user = self.request.user
+        return form
 
     def form_valid(self, form):
         category = form.cleaned_data['category']
