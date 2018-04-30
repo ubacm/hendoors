@@ -3,24 +3,23 @@
 
 {% block content %}
   <p><a href="{{ category.event.get_absolute_url }}">Back to {{ category.event }}</a></p>
-  <h1>Category: {{ category }}</h1>
+  <h1>
+    {{ category }}
+    <span class="small_header">{{ category.event }}</span>
+  </h1>
+  <p>{{ category.description }}</p>
 
-  {% if category.image %}
-    <img src="{{ category.image.url }}" alt="{{ category.image.name }}">
-  {% endif %}
-
-  <dl>
-    <dt>Event</dt>
-    <dd><a href="{{ category.event.get_absolute_url }}">{{ category.event }}</a></dd>
-
-    <dt>Description</dt>
-    <dd>{{ category.description }}</dd>
-
-    <dt>Entries</dt>
+  <h2>Entries</h2>
+  <div class="partial__entries">
     {% for entry in category.entries.all %}
-      <dd><a href="{{ entry.get_absolute_url }}">{{ entry }}</a></dd>
+    <div class="entry">
+      <a href="{{ entry.get_absolute_url }}">
+        <div class="name">{{ entry }}</div>
+        <div class="description">{{ entry.description }}</div>
+      </a>
+    </div>
     {% empty %}
-      <dd><em>This category currently has no entries.</em></dd>
+    <p><em>This category currently has no entries.</em></p>
     {% endfor %}
-  </dl>
+  </div>
 {% endblock %}

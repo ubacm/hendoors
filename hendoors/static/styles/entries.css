@@ -1,0 +1,44 @@
+.partial__entries > .entry {
+  margin-bottom: 10px;
+}
+
+.partial__entries > .entry > a {
+  background: #fff;
+  border-radius: 4px;
+  color: #00a69c;
+  display: inline-block;
+  height: 100px;
+  padding: 10px 20px;
+  width: 100%;
+  text-decoration: none;
+}
+
+@media (min-width: 780px) {
+  .partial__entries > .entry {
+    display: inline-block;
+    margin-right: 10px;
+    width: 300px;
+  }
+
+  .partial__entries > .entry > a {
+    height: 120px;
+  }
+}
+
+.partial__entries > .entry > a:hover {
+  background: #006570;
+  color: #fff;
+}
+
+.partial__entries > .entry > a > .copy {
+  width: 100%;
+  min-height: 80px;
+}
+
+.partial__entries > .entry > a > .name {
+  font-weight: bold;
+}
+
+.partial__entries > .entry > a > .description {
+  overflow: hidden;
+}

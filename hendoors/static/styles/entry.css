@@ -1,0 +1,52 @@
+.partial__category_pills {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.partial__category_pills > .category {
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-right: 5px;
+}
+
+.partial__category_pills > .category > a {
+  background: #fff;
+  border-radius: 20px;
+  padding: 5px 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.partial__gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.partial__gallery > a {
+  align-items: center;
+  display: flex;
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 5px;
+}
+
+@media screen and (max-width: 800px) {
+  .partial__gallery > a {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+.partial__gallery > a > img {
+  vertical-align: middle;
+}
+
+.partial_entry_description {
+  background: #fff;
+  border-radius: 4px;
+  color: #000;
+  padding: 10px 20px;
+  margin-bottom: 30px;
+  min-height: 150px;
+}

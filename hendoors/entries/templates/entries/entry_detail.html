@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}{{ entry.name }}{% endblock %}
 
 {% block content %}
@@ -7,34 +8,53 @@
       Back to {{ entry.categories.all.0.event }}
     </a>
   </p>
-  <h1>Entry: {{ entry.name }}</h1>
+  <h1>
+    {{ entry.name }}
+    <span class="small_header">{{ entry.categories.all.0.event }}</span>
+  </h1>
 
-  {# TODO: add forms to vote for the various categories #}
-
-  <dl>
-    <dt>Categories</dt>
+  <span class="label">Running for: </span>
+  <div class="partial__category_pills">
     {% for category in entry.categories.all %}
-      <dd><a href="{{ category.get_absolute_url }}">{{ category }}</a></dd>
+    <div class="category">
+      <a href="{{ category.get_absolute_url }}">{{ category }}</a>
+    </div>
     {% empty %}
-      <dd><em>This entry is currently uncategorized.</em></dd>
+    <p><em>Uncategorized</em></p>
     {% endfor %}
-
-    <dt>Description</dt>
-    <dd>{{ entry.description }}</dd>
-
+  </div>
+  <p>
     {% if entry.website %}
-      <dt>Website</dt>
-      <dd><a href="{{ entry.website }}">{{ entry.website }}</a></dd>
+    <span class="label">Website</span>
+    <a href="{{ entry.website }}">{{ entry.website }}</a>
     {% endif %}
-
+    <br />
     {% if entry.repository %}
-      <dt>Repository</dt>
-      <dd><a href="{{ entry.repository }}">{{ entry.repository }}</a></dd>
+    <span class="label">Repository</span>
+    <a href="{{ entry.repository }}">{{ entry.repository }}</a>
     {% endif %}
-  </dl>
-
-  {% for image in entry.images.all %}
-    <img src="{{ image.image.url }}" alt="{{ image.image.name }}">
-  {% endfor %}
+  </p>
+  <div class="partial_entry_description">
+    {{ entry.description }}
+  </div>
+  
+  {% if entry.images.all %}
+  <div class="label">Gallery</div>
+  <div class="partial__gallery" id="gallery">
+    {% for image in entry.images.all %}
+    <a href="{{ image.image.url }}">
+      <img src="{{ image.image.url }}" alt="{{ image.image.name }}">
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
 {% endblock %}
 
+{% block script %}
+<script src="{% static 'lightgallery/js/lightgallery.min.js' %}"></script>
+<script>
+  lightGallery(document.getElementById('gallery'), {
+    thumbnail: true
+  })
+</script>
+{% endblock %}

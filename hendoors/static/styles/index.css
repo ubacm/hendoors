@@ -2,3 +2,12 @@ body {
   background-color: #002f56;
   color: #fff;
 }
+
+.small_header {
+  display: inline-block;
+  font-size: 40%;
+}
+
+.label {
+  font-weight: bold;
+}
