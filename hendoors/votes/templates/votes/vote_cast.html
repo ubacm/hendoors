@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Cast Vote</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Cast Vote{% endblock %}
+
+{% block content %}
   <h1>Cast Vote</h1>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button>Cast</button>
   </form>
-</body>
-</html>
+{% endblock %}

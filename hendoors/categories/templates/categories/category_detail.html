@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Category</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}{{ category }}{% endblock %}
+
+{% block content %}
   <h1>Category: {{ category }}</h1>
 
   {% if category.image %}
@@ -25,5 +22,4 @@
       <dd><em>This category currently has no entries.</em></dd>
     {% endfor %}
   </dl>
-</body>
-</html>
+{% endblock %}
