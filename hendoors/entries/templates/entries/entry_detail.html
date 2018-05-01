@@ -69,9 +69,9 @@
     {% endif %}
   
   {% else %}
-  <button class="button button_primary">
+  <a class="button button_primary" href="{% url 'slack_auth' %}">
     Sign in using UB ACM Slack
-  </button>
+  </a>
   {% endif %}
 {% endblock %}
 

@@ -2,7 +2,7 @@
 {% block title %}{{ event }}{% endblock %}
 
 {% block content %}
-  <p><a href="/events">Back to Events</a></p>
+  <p><a href="{% url 'events:list' %}">Back to Events</a></p>
   <h1>{{ event }}</h1>
   <p>{{ event.description }}</p>
   <p>
@@ -33,7 +33,7 @@
       </a>
     </div>
     {% empty %}
-    <p></p><em>No categories found for this event.</em></p>
+    <p><em>No categories found for this event.</em></p>
     {% endfor %}
   </div>
 {% endblock %}

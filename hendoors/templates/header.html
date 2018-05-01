@@ -1,12 +1,13 @@
+{% load static %}
 <div class="component__header">
   <div class="container">
     <div class="wrapper">
       <div class="branding">
-        <a href="/"><img class="logo" src="/static/assets/ubacm.png" /></a>
+        <a href="{% url 'home' %}"><img class="logo" src="{% static 'assets/ubacm.png' %}" alt="UB ACM logo" /></a>
       </div>
       <div class="navigation">
         <ul class="links">
-          <li><a href="/events">Events</a></li>
+          <li><a href="{% url 'events:list' %}">Events</a></li>
         </ul>
         <ul class="links">
           <li><a href="http://ubacm.org/">Return to UB ACM</a></li>
