@@ -1,35 +1,116 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}{{ entry.name }}{% endblock %}
 
 {% block content %}
-  <h1>Entry: {{ entry.name }}</h1>
+  <p>
+    <a href="{{ entry.categories.all.0.event.get_absolute_url }}">
+      Back to {{ entry.categories.all.0.event }}
+    </a>
+  </p>
+  <h1>
+    {{ entry.name }}
+    <span class="small_header">{{ entry.categories.all.0.event }}</span>
+  </h1>
 
-  {# TODO: add forms to vote for the various categories #}
-
-  <dl>
-    <dt>Categories</dt>
+  <span class="label">Running for: </span>
+  <div class="partial__category_pills">
     {% for category in entry.categories.all %}
-      <dd><a href="{{ category.get_absolute_url }}">{{ category }}</a></dd>
+    <div class="category">
+      <a href="{{ category.get_absolute_url }}">{{ category }}</a>
+    </div>
     {% empty %}
-      <dd><em>This entry is currently uncategorized.</em></dd>
+    <p><em>Uncategorized</em></p>
     {% endfor %}
-
-    <dt>Description</dt>
-    <dd>{{ entry.description }}</dd>
-
+  </div>
+  <p>
     {% if entry.website %}
-      <dt>Website</dt>
-      <dd><a href="{{ entry.website }}">{{ entry.website }}</a></dd>
+    <span class="label">Website</span>
+    <a href="{{ entry.website }}">{{ entry.website }}</a>
     {% endif %}
-
+    <br />
     {% if entry.repository %}
-      <dt>Repository</dt>
-      <dd><a href="{{ entry.repository }}">{{ entry.repository }}</a></dd>
+    <span class="label">Repository</span>
+    <a href="{{ entry.repository }}">{{ entry.repository }}</a>
     {% endif %}
-  </dl>
+  </p>
+  <div class="partial_entry_description">
+    {{ entry.description }}
+  </div>
+  
+  {% if entry.images.all %}
+  <div class="label">Gallery</div>
+  <div class="partial__gallery" id="gallery">
+    {% for image in entry.images.all %}
+    <a href="{{ image.image.url }}">
+      <img src="{{ image.image.url }}" alt="{{ image.image.name }}">
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
 
-  {% for image in entry.images.all %}
-    <img src="{{ image.image.url }}" alt="{{ image.image.name }}">
-  {% endfor %}
+  <h2>Vote</h2>
+  {% if request.user.is_authenticated %}
+    {% if entry.categories.all %}
+    <form id="vote_form">
+      {% csrf_token %}
+      <select name="category">
+        {% for category in entry.categories.all %}
+          {% if category.is_accepting_votes %}
+          <option value="{{ category.id }}">{{ category }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+      <button class="button button_primary">Vote</button>
+    </form>
+    <div id="form_message"></div>
+    {% else %}
+    <p><em>This entry is not categorized, therefor you cannot vote for it. :(</em></p>
+    {% endif %}
+  
+  {% else %}
+  <button class="button button_primary">
+    Sign in using UB ACM Slack
+  </button>
+  {% endif %}
 {% endblock %}
 
+{% block script %}
+<script src="{% static 'lightgallery/js/lightgallery.min.js' %}"></script>
+<script>
+  lightGallery(document.getElementById('gallery'), {
+    thumbnail: true
+  })
+
+  document.getElementById('vote_form').onsubmit = function (event) {
+    event.preventDefault()
+    var formData = new FormData(document.forms.vote_form)
+    var sendForm = new FormData()
+    
+    sendForm.append('category', formData.get('category'))
+    sendForm.append('entry', {{ entry.id }})
+    sendForm.append('weight', 1)
+
+    fetch('{% url "votes:cast" %}', {
+      body: sendForm, // must match 'Content-Type' header
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, same-origin, *omit
+      headers: {
+        'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+      },
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    })
+    .then(function (res) {
+      return res.json()
+    })
+    .then(function (json) {
+      console.log(json)
+      if (!json.success) {
+        document.getElementById('form_message').innerHTML = json.errors.join(' ')
+      } else {
+        document.getElementById('form_message').innerHTML = 'You have successfully voted for {{ entry }}!'
+      }
+    })
+  }
+</script>
+{% endblock %}

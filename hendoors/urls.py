@@ -21,9 +21,11 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('hendoors.accounts.urls')),
     path('categories/', include('hendoors.categories.urls')),
     path('entries/', include('hendoors.entries.urls')),
     path('events/', include('hendoors.events.urls')),
+    path('slack/', include('django_slack_oauth.urls')),
     path('votes/', include('hendoors.votes.urls')),
 ]
 

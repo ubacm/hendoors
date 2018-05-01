@@ -10,6 +10,7 @@ class Category(models.Model):
     description = models.TextField()
     image = models.ImageField(blank=True, upload_to='categories')
     voting_open = models.NullBooleanField(help_text="Uses the event's default if not explicitly specified.")
+    marks_required = models.IntegerField(default=0)
 
     class Meta:
         verbose_name_plural = 'categories'
