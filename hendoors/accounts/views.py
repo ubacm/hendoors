@@ -20,6 +20,12 @@ UserModel = get_user_model()
 class LogInView(TemplateView):
     template_name = 'accounts/log_in.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        next_url = self.request.GET.get('next')
+        context['next_url'] = '?next={}'.format(next_url) if next_url else ''
+        return context
+
 
 @method_decorator(never_cache, name='dispatch')
 class SlackLogInView(RedirectView):

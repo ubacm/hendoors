@@ -141,6 +141,3 @@ CHECKIN_SCORES_URL = 'https://chicken-ubacm.herokuapp.com/users/scores'
 SLACK_CLIENT_ID = os.environ.get('SLACK_CLIENT_ID')
 SLACK_CLIENT_SECRET = os.environ.get('SLACK_CLIENT_SECRET')
 SLACK_SCOPE = 'identity.basic,identity.email'
-SLACK_PIPELINES = [
-    'hendoors.accounts.pipelines.register_slack_user',
-]
