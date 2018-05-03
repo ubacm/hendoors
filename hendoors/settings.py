@@ -20,12 +20,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'zk6*@%*l6d60wxwv&9lzwema(x!1d*)ydd8u9c3o%=l7cgr5rp'
+SECRET_KEY = os.getenv('SECRET_KEY', 'zk6*@%*l6d60wxwv&9lzwema(x!1d*)ydd8u9c3o%=l7cgr5rp')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    'vote.ubacm.org',
+]
 
 
 # Application definition
@@ -80,11 +84,21 @@ WSGI_APPLICATION = 'hendoors.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+if DEBUG:
+    _DATABASE = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+else:
+    _DATABASE = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DATABASE_PASSWORD'],
+        'HOST': os.environ['DB_HOST'],
+    }
+DATABASES = {
+    'default': _DATABASE,
 }
 
 
@@ -145,6 +159,7 @@ SLACK_SCOPE = 'identity.basic,identity.email'
 CSRF_COOKIE_SECURE = not DEBUG
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = not DEBUG
 X_FRAME_OPTIONS = 'DENY'
 
