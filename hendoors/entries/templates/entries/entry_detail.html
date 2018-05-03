@@ -65,11 +65,11 @@
     </form>
     <div id="form_message"></div>
     {% else %}
-    <p><em>This entry is not categorized, therefor you cannot vote for it. :(</em></p>
+    <p><em>This entry is not categorized, therefore you cannot vote for it. :(</em></p>
     {% endif %}
   
   {% else %}
-  <a class="button button_primary" href="{% url 'slack_auth' %}">
+  <a class="button button_primary" href="{% url 'accounts:slack-log-in' %}">
     Sign in using UB ACM Slack
   </a>
   {% endif %}
