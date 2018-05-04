@@ -22,6 +22,10 @@ class Entry(models.Model):
     def get_absolute_url(self):
         return reverse('entries:detail', kwargs={'pk': self.pk})
 
+    def can_be_edited_by(self, user):
+        return (user.has_perm('entries.change_entry')
+                or self.team.filter(id=user.id).exists())
+
 
 class EntryImage(models.Model):
     entry = models.ForeignKey(Entry, models.CASCADE, related_name='images')
