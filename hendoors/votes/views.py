@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
 from django.http import JsonResponse
@@ -49,7 +49,8 @@ class VoteCastView(LoginRequiredMixin, FormView):
         })
 
 
-class CategoryVoteStatisticsView(TemplateView):
+class CategoryVoteStatisticsView(PermissionRequiredMixin, TemplateView):
+    permission_required = 'votes.add_vote'
     template_name = 'votes/category_vote_statistics.html'
 
     def get_context_data(self, **kwargs):
@@ -72,7 +73,8 @@ class CategoryVoteStatisticsView(TemplateView):
         return context
 
 
-class EntryVoteStatisticsView(TemplateView):
+class EntryVoteStatisticsView(PermissionRequiredMixin, TemplateView):
+    permission_required = 'votes.add_vote'
     template_name = 'votes/entry_vote_statistics.html'
 
     def get_context_data(self, **kwargs):
