@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
@@ -10,6 +11,7 @@ class Entry(models.Model):
     description = models.TextField()
     website = models.URLField(blank=True)
     repository = models.URLField(blank=True)
+    team = models.ManyToManyField(settings.AUTH_USER_MODEL, 'entries')
 
     class Meta:
         verbose_name_plural = 'entries'
