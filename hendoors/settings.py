@@ -92,10 +92,10 @@ if DEBUG:
 else:
     _DATABASE = {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
+        'NAME': os.getenv('DB_NAME', 'hendoors'),
+        'USER': os.getenv('DB_USER', 'hendoors'),
         'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': os.environ['DB_HOST'],
+        'HOST': os.getenv('DB_HOST', 'localhost'),
     }
 DATABASES = {
     'default': _DATABASE,
