@@ -30,14 +30,15 @@ class VoteCastForm(forms.Form):
                 self.add_error('entry', 'The entry is not in the specified category.')
         if self.user is None:
             raise forms.ValidationError('User not found.')
-        try:
-            slack_id = self.user.extras['user']['id']
-        except KeyError:
-            raise forms.ValidationError('Slack user ID not found.')
-        user_marks = utils.get_marks_by_id(slack_id)
-        if user_marks < category.marks_required:
-            self.add_error(
-                'category',
-                'This category requires {} marks to vote (you have {}).'
-                    .format(category.marks_required, user_marks)
-            )
+        if category.marks_required > 0:
+            try:
+                slack_id = self.user.extras['user']['id']
+            except KeyError:
+                raise forms.ValidationError('Slack user ID not found.')
+            user_marks = utils.get_marks_by_id(slack_id)
+            if user_marks < category.marks_required:
+                self.add_error(
+                    'category',
+                    'This category requires {} marks to vote (you have {}).'
+                        .format(category.marks_required, user_marks)
+                )
