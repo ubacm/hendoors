@@ -8,7 +8,7 @@ from hendoors.categories.models import Category
 
 
 class Entry(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField('entry name', max_length=50)
     categories = models.ManyToManyField(Category, related_name='entries')
     description = models.TextField()
     team = models.CharField(
