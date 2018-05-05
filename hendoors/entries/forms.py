@@ -7,6 +7,9 @@ class EntryForm(forms.ModelForm):
     class Meta:
         model = Entry
         exclude = ()
+        help_texts = {
+            'categories': 'Ctrl/Cmd + click to select multiple categories.',
+        }
 
     def clean_categories(self):
         categories = self.cleaned_data['categories']
