@@ -3,5 +3,5 @@ __pycache__
 cache
 db.sqlite3
 media
-static
+/static
 venv

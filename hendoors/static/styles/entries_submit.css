@@ -1,0 +1,31 @@
+.partial__entries_submit p {
+  margin-bottom: 0;
+}
+
+.partial__entries_submit label,
+.partial__entries_submit span {
+  color: #fff;
+}
+
+.partial__entries_submit span {
+  margin-left: 10px;
+}
+
+.partial__entries_submit input,
+.partial__entries_submit select,
+.partial__entries_submit textarea {
+  width: 500px;
+}
+
+.partial__entries_submit textarea {
+  width: 100%;
+} 
+
+.partial__entries_submit button {
+  margin-top: 20px;
+}
+
+#id_description {
+  height: 200px;
+}
+
