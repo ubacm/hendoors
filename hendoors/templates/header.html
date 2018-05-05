@@ -6,12 +6,18 @@
         <a href="{% url 'home' %}"><img class="logo" src="{% static 'assets/ubacm.png' %}" alt="UB ACM logo" /></a>
       </div>
       <div class="navigation">
-        <ul class="links">
-          <li><a href="{% url 'events:list' %}">Events</a></li>
-        </ul>
-        <ul class="links">
-          <li><a href="http://ubacm.org/">Return to UB ACM</a></li>
-        </ul>
+        {% if request.user.is_authenticated %}
+          <ul class="links">
+            <li><a>{{ request.user.get_short_name }} ({{ request.user.email }})</a></li>
+          </ul>
+          <ul class="links" style="display: inline-block;">
+            <li><a href="{% url 'accounts:log-out' %}">Log Out</a></li>
+          </ul>
+        {% else %}
+          <ul class="links" style="display: inline-block;">
+            <li><a href="{% url 'accounts:log-in' %}">Log In</a></li>
+          </ul>
+        {% endif %}
       </div>
     </div>
   </div>
