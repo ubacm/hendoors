@@ -13,14 +13,19 @@ class _EntryTeammateRequiredMixin(UserPassesTestMixin):
         entry = self.get_entry()
         if not isinstance(entry, models.Entry):
             raise ValueError('get_entry() must return an Entry object')
-        user = self.request.user
-        messages.error(self.request, 'You do not have access to edit this entry.')
-        return entry.can_be_edited_by(user)
+        has_access = entry.can_be_edited_by(self.request.user)
+        if not has_access:
+            messages.error(self.request, 'You do not have access to edit this entry.')
+        return has_access
 
 
-class _EntryFormViewMixin(LoginRequiredMixin):
+class _EntryFormViewMixin(UserPassesTestMixin):
     model = models.Entry
     fields = ('name', 'categories', 'description', 'team', 'website', 'repository')
+
+    def test_func(self):
+        user = self.request.user
+        return user.is_authenticated and user.is_active
 
 
 class EntryCreateView(_EntryFormViewMixin, CreateView):

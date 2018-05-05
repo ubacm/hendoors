@@ -43,6 +43,8 @@ class Entry(models.Model):
         return reverse('entries:detail', kwargs={'pk': self.pk})
 
     def can_be_edited_by(self, user):
+        if not user.is_authenticated or not user.is_active:
+            return False
         return (user.has_perm('entries.change_entry')
                 or user.email in self.team_list)
 
