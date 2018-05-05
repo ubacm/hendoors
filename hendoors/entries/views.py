@@ -42,7 +42,7 @@ class EntryDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_can_upload_images'] = (
+        context['user_can_edit'] = (
             self.object.can_be_edited_by(self.request.user))
         return context
 

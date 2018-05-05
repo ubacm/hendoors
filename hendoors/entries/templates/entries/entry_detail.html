@@ -12,6 +12,13 @@
     {{ entry.name }}
     <span class="small_header">{{ entry.categories.all.0.event }}</span>
   </h1>
+  {% if user_can_edit %}
+    <p>
+      <a href="{% url 'entries:update' pk=entry.pk %}" class="button button_primary">
+        Edit Entry
+      </a>
+    </p>
+  {% endif %}
 
   <span class="label">Running for: </span>
   <div class="partial__category_pills">
@@ -38,7 +45,7 @@
     {{ entry.description }}
   </div>
   
-  {% if entry.images.all or user_can_upload_images %}
+  {% if entry.images.all or user_can_edit %}
   <div class="label">Gallery</div>
     {% if entry.images.all %}
     <div class="partial__gallery" id="gallery">
@@ -49,7 +56,7 @@
       {% endfor %}
     </div>
     {% endif %}
-    {% if user_can_upload_images %}
+    {% if user_can_edit %}
     <p>
       <a href="{% url 'entries:upload-images' entry_pk=entry.pk %}" class="button button_primary">
         Upload Images
