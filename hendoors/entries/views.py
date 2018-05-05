@@ -6,14 +6,14 @@ from .models import Entry
 
 class _EntryFormViewMixin(LoginRequiredMixin):
     model = Entry
-    fields = ('name', 'categories', 'description', 'website', 'repository')
+    fields = ('name', 'categories', 'description', 'team', 'website', 'repository')
 
 
 class EntryCreateView(_EntryFormViewMixin, CreateView):
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        self.object.team.add(self.request.user)
-        return response
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['team'] = self.request.user.email
+        return initial
 
 
 class EntryDetailView(DetailView):

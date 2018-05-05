@@ -11,7 +11,9 @@ class Entry(models.Model):
     description = models.TextField()
     website = models.URLField(blank=True)
     repository = models.URLField(blank=True)
-    team = models.ManyToManyField(settings.AUTH_USER_MODEL, 'entries')
+    team = models.CharField(
+        max_length=200, blank=True,
+        help_text='Comma-separated list of email addresses.')
 
     class Meta:
         verbose_name_plural = 'entries'
@@ -19,12 +21,28 @@ class Entry(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if isinstance(self.team, str):
+            self.team_list = self.team
+        return super().save(*args, **kwargs)
+
+    @property
+    def team_list(self):
+        return self.team.split(', ')
+
+    @team_list.setter
+    def team_list(self, emails):
+        if not isinstance(emails, str):
+            raise ValueError('Assignment to Entry.team_list requires a string')
+        email_gen = (email.strip() for email in emails.split(','))
+        self.team = ', '.join(sorted(filter(None, email_gen)))
+
     def get_absolute_url(self):
         return reverse('entries:detail', kwargs={'pk': self.pk})
 
     def can_be_edited_by(self, user):
         return (user.has_perm('entries.change_entry')
-                or self.team.filter(id=user.id).exists())
+                or user.email in self.team_list)
 
 
 class EntryImage(models.Model):
