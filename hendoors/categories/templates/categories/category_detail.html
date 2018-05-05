@@ -8,6 +8,11 @@
     <span class="small_header">{{ category.event }}</span>
   </h1>
   <p>{{ category.description }}</p>
+  {% if category.is_accepting_entries %}
+  <p>
+    <a href="{% url 'entries:create' %}?category={{ category.id }}" class="button button_primary">Create an Entry</a>
+  </p>
+  {% endif %}
 
   <h2>Entries</h2>
   <div class="partial__entries">
