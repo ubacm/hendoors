@@ -43,7 +43,7 @@
   <div class="partial__gallery" id="gallery">
     {% for image in entry.images.all %}
     <a href="{{ image.image.url }}">
-      <img src="{{ image.image.url }}" alt="{{ image.image.name }}">
+      <img src="{{ image.image.url }}" alt="Image of {{ entry.name }}">
     </a>
     {% endfor %}
   </div>

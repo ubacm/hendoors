@@ -1,4 +1,6 @@
-from django.conf import settings
+import os
+import uuid
+
 from django.db import models
 from django.urls import reverse
 
@@ -45,9 +47,19 @@ class Entry(models.Model):
                 or user.email in self.team_list)
 
 
+def _generate_file_path(instance, old_file_name):
+    extension = os.path.splitext(old_file_name)[1]
+    new_file_name = '{}{}'.format(
+        ''.join(str(uuid.uuid4()).split('-')),
+        extension,
+    )
+    file_path = os.path.join('entries', str(instance.entry_id), new_file_name)
+    return file_path
+
+
 class EntryImage(models.Model):
     entry = models.ForeignKey(Entry, models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='entries')
+    image = models.ImageField(upload_to=_generate_file_path)
 
     class Meta:
         verbose_name_plural = 'entry images'
