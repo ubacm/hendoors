@@ -3,9 +3,11 @@
 
 {% block content %}
   <h1>{% if entry.pk %}Edit{% else %}Create{% endif %} Entry</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button>Save</button>
-  </form>
+  <div class="partial__entries_submit">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="button button_primary">Save</button>
+    </form>
+  </div>
 {% endblock %}
