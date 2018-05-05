@@ -9,10 +9,14 @@ class CategoryDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['entry_voted_for'] = Entry.objects.filter(
-            vote__category=self.object,
-            vote__user=self.request.user,
-        ).first()
+        context['entry_voted_for'] = (
+            Entry.objects.filter(
+                vote__category=self.object,
+                vote__user=self.request.user,
+            ).first()
+            if self.request.user.is_authenticated
+            else None
+        )
         return context
 
 
