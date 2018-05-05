@@ -40,6 +40,12 @@ class EntryCreateView(UserPassesTestMixin, _EntryFormViewMixin, CreateView):
 class EntryDetailView(DetailView):
     model = models.Entry
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_can_upload_images'] = (
+            self.object.can_be_edited_by(self.request.user))
+        return context
+
 
 class EntryUpdateView(_EntryTeammateRequiredMixin, _EntryFormViewMixin, UpdateView):
     def get_entry(self):

@@ -38,15 +38,24 @@
     {{ entry.description }}
   </div>
   
-  {% if entry.images.all %}
+  {% if entry.images.all or user_can_upload_images %}
   <div class="label">Gallery</div>
-  <div class="partial__gallery" id="gallery">
-    {% for image in entry.images.all %}
-    <a href="{{ image.image.url }}">
-      <img src="{{ image.image.url }}" alt="Image of {{ entry.name }}">
-    </a>
-    {% endfor %}
-  </div>
+    {% if entry.images.all %}
+    <div class="partial__gallery" id="gallery">
+      {% for image in entry.images.all %}
+      <a href="{{ image.image.url }}">
+        <img src="{{ image.image.url }}" alt="Image of {{ entry.name }}">
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if user_can_upload_images %}
+    <p>
+      <a href="{% url 'entries:upload-images' entry_pk=entry.pk %}" class="button button_primary">
+        Upload Images
+      </a>
+    </p>
+    {% endif %}
   {% endif %}
 
   <h2>Vote</h2>
