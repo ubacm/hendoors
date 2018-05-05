@@ -13,14 +13,14 @@
   <h2>Categories</h2>
   <div class="partial__categories">
     {% for category in event.category_set.all %}
-    <div class="category{% if category.voting_open is not False %} open{% endif %}">
+    <div class="category{% if category.is_accepting_votes is not False %} open{% endif %}">
       <a href="{{ category.get_absolute_url }}">
         <div class="copy">
           <div class="title">
             <span class="name">
               {{ category }}
             </span>
-            {% if category.voting_open is False %}
+            {% if category.is_accepting_votes is False %}
             <span class="status">
               <em>This category is closed.</em>
             </span>

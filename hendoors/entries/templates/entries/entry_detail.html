@@ -56,7 +56,7 @@
       {% csrf_token %}
       <select name="category">
         {% for category in entry.categories.all %}
-          {% if category.is_accepting_votes %}
+          {% if category.can_accept_votes %}
           <option value="{{ category.id }}">{{ category }}</option>
           {% endif %}
         {% endfor %}

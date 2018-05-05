@@ -11,7 +11,7 @@ class Category(models.Model):
     image = models.ImageField(blank=True, upload_to='categories')
     marks_required = models.IntegerField(default=0)
     is_accepting_entries = models.BooleanField(default=False)
-    voting_open = models.NullBooleanField(
+    is_accepting_votes = models.NullBooleanField(
         help_text="Uses the event's default if not explicitly specified.")
 
     class Meta:
@@ -24,5 +24,7 @@ class Category(models.Model):
         return reverse('categories:detail', kwargs={'pk': self.pk})
 
     @property
-    def is_accepting_votes(self):
-        return self.event.voting_open if self.voting_open is None else self.voting_open
+    def can_accept_votes(self):
+        if self.is_accepting_votes is not None:
+            return self.is_accepting_votes
+        return self.event.is_accepting_votes
