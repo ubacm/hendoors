@@ -2,16 +2,19 @@ from typing import Dict
 import urllib.request
 import json
 
+from django.core.cache import cache
 from django.conf import settings
 
 
-# TODO: cache this
 def load_marks(url: str=settings.CHECKIN_SCORES_URL) -> Dict[str, int]:
-    with urllib.request.urlopen(url) as response:
-        response_bytes = response.read()
-    data = json.loads(response_bytes.decode())
-    scores = {d['slack_id']: int(d['score']) for d in data}
-    return scores
+    marks = cache.get('marks')
+    if marks is None:
+        with urllib.request.urlopen(url) as response:
+            response_bytes = response.read()
+        data = json.loads(response_bytes.decode())
+        marks = {d['slack_id']: int(d['score']) for d in data}
+        cache.set('marks', marks, 60 * 2)
+    return marks
 
 
 def get_marks_by_id(slack_id: str) -> int:
