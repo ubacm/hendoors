@@ -17,7 +17,7 @@ class VoteCastForm(forms.Form):
 
     def clean_category(self):
         category = self.cleaned_data['category']
-        if not category.is_accepting_votes():
+        if not category.is_accepting_votes:
             raise forms.ValidationError(
                 'The category is not currently accepting votes.')
         return category

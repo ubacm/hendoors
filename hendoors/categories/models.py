@@ -9,8 +9,10 @@ class Category(models.Model):
     event = models.ForeignKey(Event, models.CASCADE)
     description = models.TextField()
     image = models.ImageField(blank=True, upload_to='categories')
-    voting_open = models.NullBooleanField(help_text="Uses the event's default if not explicitly specified.")
     marks_required = models.IntegerField(default=0)
+    is_accepting_entries = models.BooleanField(default=False)
+    voting_open = models.NullBooleanField(
+        help_text="Uses the event's default if not explicitly specified.")
 
     class Meta:
         verbose_name_plural = 'categories'
@@ -21,5 +23,6 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('categories:detail', kwargs={'pk': self.pk})
 
+    @property
     def is_accepting_votes(self):
         return self.event.voting_open if self.voting_open is None else self.voting_open
