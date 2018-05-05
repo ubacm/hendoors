@@ -69,7 +69,7 @@
     {% endif %}
   
   {% else %}
-  <a class="button button_primary" href="{% url 'accounts:slack-log-in' %}">
+  <a class="button button_primary" href="{% url 'accounts:slack-log-in' %}?next={{ request.path }}">
     Sign in using UB ACM Slack
   </a>
   {% endif %}
