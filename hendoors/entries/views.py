@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView, FormView, UpdateView
 
@@ -12,27 +12,29 @@ class _EntryTeammateRequiredMixin(UserPassesTestMixin):
     def test_func(self):
         entry = self.get_entry()
         if not isinstance(entry, models.Entry):
-            raise ValueError('get_entry() must return an Entry object')
+            raise ValueError('{}.get_entry() must return an Entry object'
+                             .format(self.__class__.__name__))
         has_access = entry.can_be_edited_by(self.request.user)
         if not has_access:
             messages.error(self.request, 'You do not have access to edit this entry.')
         return has_access
 
 
-class _EntryFormViewMixin(UserPassesTestMixin):
+class _EntryFormViewMixin:
     model = models.Entry
-    fields = ('name', 'categories', 'description', 'team', 'website', 'repository')
-
-    def test_func(self):
-        user = self.request.user
-        return user.is_authenticated and user.is_active
+    form_class = forms.EntryForm
 
 
-class EntryCreateView(_EntryFormViewMixin, CreateView):
+class EntryCreateView(UserPassesTestMixin, _EntryFormViewMixin, CreateView):
+
     def get_initial(self):
         initial = super().get_initial()
         initial['team'] = self.request.user.email
         return initial
+
+    def test_func(self):
+        user = self.request.user
+        return user.is_authenticated and user.is_active
 
 
 class EntryDetailView(DetailView):

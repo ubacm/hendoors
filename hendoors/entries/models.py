@@ -11,11 +11,11 @@ class Entry(models.Model):
     name = models.CharField(max_length=50)
     categories = models.ManyToManyField(Category, related_name='entries')
     description = models.TextField()
-    website = models.URLField(blank=True)
-    repository = models.URLField(blank=True)
     team = models.CharField(
         max_length=200, blank=True,
         help_text='Comma-separated list of email addresses.')
+    website = models.URLField(blank=True)
+    repository = models.URLField(blank=True)
 
     class Meta:
         verbose_name_plural = 'entries'
