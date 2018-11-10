@@ -12,6 +12,9 @@ class Event(models.Model):
     time = models.DateTimeField()
     is_accepting_votes = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ('-time',)
+
     def __str__(self):
         return self.name
 
